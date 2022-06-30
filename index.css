@@ -13,7 +13,7 @@ h1 {
     font-weight: 100;
 }
 
-@media only screen and (min-width: 1570px) {
+@media only screen and (min-width: 1555px) {
     .img1 {
         position: absolute;
         right: -8;
@@ -33,7 +33,27 @@ h1 {
         right: 15;
     }
 }
-@media only screen and (max-width: 1570px) {
+@media only screen and (min-width: 853px) and (max-width: 1554px) {
+    .img1 {
+        position: absolute;
+        right: -8;
+        top: 72px;
+        height: 120px;
+    }
+    .img2 {
+        position: absolute;
+        transform: scaleX(-1);
+        left: -8px;
+        top: 72px;
+        height: 120px;
+    }
+
+    .toprow span {
+        position: absolute;
+        right: 15;
+    }
+}
+@media only screen and (max-width: 853px) {
     .spacer {
         height: calc((100vw - 16px) * 344 / 629);
     }
