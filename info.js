@@ -6,7 +6,16 @@ var renderInfo;
         }<br>Total players: ${
             Object.keys(players).length
         }<br>Total money laundered: ${formatMoney(
-            games.reduce((p, game) => p + game.buyin * game.players.length, 0)
+            games.reduce(
+                (p, game) =>
+                    p +
+                    game.buyin *
+                        game.players.reduce(
+                            (p, player) => p + player.split("/").length,
+                            0
+                        ),
+                0
+            )
         )}`;
     };
 })();
