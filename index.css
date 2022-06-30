@@ -1,0 +1,99 @@
+body {
+    color: white;
+    background-color: rgb(34, 31, 31);
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 900;
+    position: relative;
+}
+
+h1 {
+    font-size: 72px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-weight: 100;
+}
+
+@media only screen and (min-width: 1570px) {
+    .img1 {
+        position: absolute;
+        right: -8;
+        top: 0;
+        height: 120px;
+    }
+    .img2 {
+        position: absolute;
+        transform: scaleX(-1);
+        left: -8px;
+        top: 0;
+        height: 120px;
+    }
+
+    .toprow span {
+        position: absolute;
+        right: 15;
+    }
+}
+@media only screen and (max-width: 1570px) {
+    .spacer {
+        height: calc((100vw - 16px) * 344 / 629);
+    }
+    .img1 {
+        height: calc(100vw - 16px);
+        transform: rotate(90deg) translate(0, 50%);
+        position: absolute;
+        /* bottom: 0; */
+        /* width: 100%; */
+    }
+    .img2 {
+        display: none;
+    }
+}
+
+#table {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+#table > :not(.toprow).odd {
+    background: rgb(48, 38, 38);
+}
+#table > .selected:not(.toprow) {
+    background-color: rgb(77, 18, 18);
+}
+
+.toprow {
+    padding: 15px;
+}
+
+#table > div:not(.toprow) {
+    padding: 10px;
+}
+
+.toprow {
+    position: relative;
+    cursor: pointer;
+    background-color: rgb(114, 114, 114);
+    font-size: 30px;
+    text-align: center;
+}
+
+.toprow.selected {
+    color: rgb(185, 9, 9);
+}
+
+.toprow:hover {
+    background-color: rgb(94, 94, 94);
+}
+
+.toprow.first-child {
+    border-top-left-radius: 1em;
+}
+
+.toprow.last-child {
+    border-top-right-radius: 1em;
+}
+
+h1 {
+    width: 100%;
+    text-align: center;
+}
