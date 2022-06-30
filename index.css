@@ -115,3 +115,29 @@ h1 {
     width: 100%;
     text-align: center;
 }
+
+#year-selector {
+    display: flex;
+    margin-bottom: 1em;
+    border-radius: 1em;
+    overflow: hidden;
+}
+#year-selector div {
+    flex: 1;
+    cursor: pointer;
+    background-color: rgb(114, 114, 114);
+    font-size: 30px;
+    text-align: center;
+}
+
+#year-selector div.selected {
+    color: rgb(185, 9, 9);
+}
+
+#year-selector div:hover {
+    background-color: rgb(94, 94, 94);
+}
+
+#info {
+    margin: 20px;
+}

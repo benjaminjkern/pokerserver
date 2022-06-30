@@ -1,13 +1,14 @@
 var renderTable;
+var formatMoney;
 
 (() => {
     let PLAYERS;
     let sortingBy;
     let reversingSort;
 
-    renderTable = (players, sortedBy = 2) => {
+    renderTable = (players, sortedBy = sortingBy || 1, flipTable = true) => {
         PLAYERS = [...Object.keys(players).map((name) => players[name])];
-        if (sortedBy === sortingBy) {
+        if (sortedBy === sortingBy && flipTable) {
             reversingSort = !reversingSort;
         } else {
             reversingSort = false;
@@ -45,16 +46,16 @@ var renderTable;
     };
 
     const unpackPlayer = (player) => {
-        const { name, profit, score, games, wins, draws, losses } = player;
-        return [name, profit, score, games, wins, draws, losses];
+        const { name, score, profit, games, wins, draws, losses } = player;
+        return [name, score, profit, games, wins, draws, losses];
     };
 
     const renderRow = (table, player, topRow) => {
         for (const [i, element] of unpackPlayer(player).entries()) {
             const cell = document.createElement("div");
-            if (i === 2 && !topRow) {
+            if (i === 1 && !topRow) {
                 cell.innerHTML = element.toFixed(2);
-            } else if (i === 1 && !topRow) {
+            } else if (i === 2 && !topRow) {
                 cell.innerHTML = formatMoney(element);
             } else {
                 cell.innerHTML = element;
@@ -78,7 +79,7 @@ var renderTable;
         }
     };
 
-    const formatMoney = (value) => {
+    formatMoney = (value) => {
         if (value < 0) return `-${formatMoney(-value)}`;
         const [integer, decimal] = value.toFixed(2).split(".");
         return `$${commify(integer)}.${decimal}`;
