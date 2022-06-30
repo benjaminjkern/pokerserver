@@ -1,6 +1,6 @@
 window.onload = async () => {
-    const gamesString = await fetch("/games/2022.csv").then((response) =>
-        response.text()
+    const gamesString = await fetch("/sillygeesepoker/games/2022.csv").then(
+        (response) => response.text()
     );
     const games = gamesString
         .split(/\r?\n/g)
