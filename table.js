@@ -1,13 +1,22 @@
 var renderTable;
 var formatMoney;
+let colors = {};
 
-(() => {
-    let PLAYERS;
+window.addEventListener("load", () => {
     let sortingBy;
     let reversingSort;
+    let PLAYERS;
 
     renderTable = (players, sortedBy = sortingBy || 1, flipTable = true) => {
         PLAYERS = [...Object.keys(players).map((name) => players[name])];
+
+        for (const player of PLAYERS) {
+            const lowercasename = player.name.toLowerCase();
+            if (colors[lowercasename]) continue;
+            colors[lowercasename] = `#${Math.random()
+                .toString(16)
+                .substring(2, 8)}`;
+        }
         if (sortedBy === sortingBy && flipTable) {
             reversingSort = !reversingSort;
         } else {
@@ -91,4 +100,4 @@ var formatMoney;
             integer.substring(0, integer.length - 3)
         )},${integer.substring(integer.length - 3)}`;
     };
-})();
+});

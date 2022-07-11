@@ -1,5 +1,5 @@
 var renderInfo;
-(() => {
+window.addEventListener("load", () => {
     renderInfo = (games, players) => {
         document.getElementById("info").innerHTML = `Total games: ${
             games.length
@@ -18,4 +18,4 @@ var renderInfo;
             )
         )}`;
     };
-})();
+});

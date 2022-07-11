@@ -6,6 +6,7 @@
     <script src="elo.js"></script>
     <script src="table.js"></script>
     <script src="info.js"></script>
+    <script src="graph.js"></script>
     <link rel="stylesheet" href="index.css" />
     <meta property="og:image" content="https://benjaminjkern.github.io/sillygeesepoker/goose.png" />
 </head>
@@ -14,6 +15,7 @@
     <h1>Silly Geese Poker Current Standings</h1>
     <div id="year-selector">
         <div id="show-all">Show all</div>
+        <div id="opengraph">Chart ></div>
     </div>
     <div id="table">
     </div>
@@ -21,6 +23,10 @@
     <div class="spacer"></div>
     <img src="goose.png" class="img1" />
     <img src="goose.png" class="img2" />
+    <div id="graphcontainer">
+        <span id="closegraph">X</span>
+        <canvas id="graph"></canvas>
+    </div>
 </body>
 
 </html>

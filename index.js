@@ -1,3 +1,5 @@
+let games;
+
 window.onload = () => {
     const availableYears = ["2021", "2022"];
     const reloadTable = async (year) => {
@@ -16,8 +18,8 @@ window.onload = () => {
             document.getElementById("show-all").classList.add("selected");
         }
 
-        const games = await Promise.all(fetchYears.map(fetchYear)).then(
-            (yearGames) => yearGames.flat()
+        games = await Promise.all(fetchYears.map(fetchYear)).then((yearGames) =>
+            yearGames.flat()
         );
         const players = parseGames(games);
 

@@ -62,7 +62,6 @@ var parseGames;
             (p, c) => ({ ...p, [c]: (p[c] || 0) + 1 }),
             {}
         );
-        console.log(playerBuyins);
 
         for (const name in playerBuyins) {
             const player = players[name];
