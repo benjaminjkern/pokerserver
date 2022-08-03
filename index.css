@@ -149,7 +149,7 @@ h1 {
     width: 100vw;
     height: 100vh;
     display: none;
-    background-color:rgb(0 0 0 / 67%);
+    background-color: rgb(0 0 0 / 67%);
 }
 #graphcontainer span {
     position: absolute;
@@ -166,4 +166,10 @@ h1 {
 
 #opengraph {
     cursor: pointer;
+}
+
+@media only screen and (min-width: 1223px) {
+    .breakformobile {
+        display: none;
+    }
 }

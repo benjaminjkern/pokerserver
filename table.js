@@ -104,9 +104,9 @@ window.addEventListener("load", () => {
     const diff = (current, prev, numberMask = (s) => s) => {
         const diffAmount = current - prev;
         if (diffAmount === 0) return "";
-        return `<span style="color: ${diffAmount >= 0 ? "green" : "red"}">${
-            diffAmount > 0 ? "+" : ""
-        }${numberMask(diffAmount)}</span>`;
+        return `<br class="breakformobile"><span style="color: ${
+            diffAmount >= 0 ? "green" : "red"
+        }">${diffAmount > 0 ? "+" : ""}${numberMask(diffAmount)}</span>`;
     };
 
     formatMoney = (value) => {
