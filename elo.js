@@ -66,6 +66,18 @@ var parseGames;
             };
         });
 
+        playersInGame.forEach((name) => {
+            players[name].previousProfit = players[name].profit;
+            players[name].previousScore = players[name].score;
+
+            players[name].previousStats = [
+                players[name].games,
+                players[name].wins,
+                players[name].draws,
+                players[name].losses,
+            ];
+        });
+
         const playerBuyins = playersInGame.reduce(
             (p, c) => ({ ...p, [c]: (p[c] || 0) + 1 }),
             {}
@@ -106,10 +118,6 @@ var parseGames;
                 secondPlace.profit += buyin / secondPlaces.length;
             });
         }
-
-        playersInGame.forEach((name) => {
-            players[name].previousScore = players[name].score;
-        });
 
         for (const name of orderOut) {
             const names = name.split("/");

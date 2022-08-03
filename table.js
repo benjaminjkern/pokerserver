@@ -64,13 +64,23 @@ window.addEventListener("load", () => {
             const cell = document.createElement("div");
             if (i === 1 && !topRow) {
                 cell.innerHTML = element.toFixed(2);
-                if (player.wasInLastGame)
+                if (player.wasInLastGame && sortingBy === 1)
                     cell.innerHTML +=
-                        " " + diff(player.score, player.previousScore);
+                        " " +
+                        diff(player.score, player.previousScore, (s) =>
+                            s.toFixed(2)
+                        );
             } else if (i === 2 && !topRow) {
                 cell.innerHTML = formatMoney(element);
+                if (player.wasInLastGame && sortingBy === 2)
+                    cell.innerHTML +=
+                        " " +
+                        diff(player.profit, player.previousProfit, formatMoney);
             } else {
                 cell.innerHTML = element;
+                if (player.wasInLastGame && sortingBy === i && i >= 3)
+                    cell.innerHTML +=
+                        " " + diff(element, player.previousStats[i - 3]);
             }
             if (topRow) {
                 cell.classList.add("toprow");
@@ -91,11 +101,12 @@ window.addEventListener("load", () => {
         }
     };
 
-    const diff = (current, prev) => {
+    const diff = (current, prev, numberMask = (s) => s) => {
         const diffAmount = current - prev;
+        if (diffAmount === 0) return "";
         return `<span style="color: ${diffAmount >= 0 ? "green" : "red"}">${
-            diffAmount >= 0 ? "+" : ""
-        }${diffAmount.toFixed(2)}</span>`;
+            diffAmount > 0 ? "+" : ""
+        }${numberMask(diffAmount)}</span>`;
     };
 
     formatMoney = (value) => {
