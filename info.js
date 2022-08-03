@@ -16,6 +16,14 @@ window.addEventListener("load", () => {
                         ),
                 0
             )
-        )}`;
+        )}${
+            games[games.length - 1].quote
+                ? (() => {
+                      const [quote, author = "anonymous"] =
+                          games[games.length - 1].quote.split(/\s*-\s*/g);
+                      return `<br>Quote of the night: "${quote}" - ${author}`;
+                  })()
+                : ""
+        }`;
     };
 });

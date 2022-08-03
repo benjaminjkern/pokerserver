@@ -34,7 +34,7 @@ window.onload = () => {
             .split(/\r?\n/g)
             .filter((line) => line[0] !== "#")
             .map((game, gameNum) => {
-                const [players, buyin] = game.split(/\s*;\s*/g);
+                const [players, buyin, quote] = game.split(/\s*;\s*/g);
                 if (players.length === 0) return;
                 return {
                     gameNum,
@@ -42,6 +42,7 @@ window.onload = () => {
                         .split(/\s*,\s*/g)
                         .map((player) => player.toLowerCase()),
                     buyin: +buyin,
+                    quote,
                 };
             });
     };
