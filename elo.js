@@ -42,8 +42,15 @@ var parseGames;
 
     const playGame = (orderOut, buyin, players) => {
         const playersInGame = orderOut.flatMap((name) => name.split("/"));
+        Object.keys(players).forEach((name) => {
+            players[name].wasInLastGame = false;
+        });
+
         playersInGame.forEach((name) => {
-            if (players[name]) return;
+            if (players[name]) {
+                players[name].wasInLastGame = true;
+                return;
+            }
             players[name] = {
                 name: capitalize(name),
                 profit: 0,
@@ -55,6 +62,7 @@ var parseGames;
                 bestHand: "",
                 secondBestHand: "",
                 thirdBestHand: "",
+                wasInLastGame: true,
             };
         });
 
@@ -98,6 +106,10 @@ var parseGames;
                 secondPlace.profit += buyin / secondPlaces.length;
             });
         }
+
+        playersInGame.forEach((name) => {
+            players[name].previousScore = players[name].score;
+        });
 
         for (const name of orderOut) {
             const names = name.split("/");

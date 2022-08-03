@@ -64,6 +64,9 @@ window.addEventListener("load", () => {
             const cell = document.createElement("div");
             if (i === 1 && !topRow) {
                 cell.innerHTML = element.toFixed(2);
+                if (player.wasInLastGame)
+                    cell.innerHTML +=
+                        " " + diff(player.score, player.previousScore);
             } else if (i === 2 && !topRow) {
                 cell.innerHTML = formatMoney(element);
             } else {
@@ -86,6 +89,13 @@ window.addEventListener("load", () => {
             if (i === 6) cell.classList.add("last-child");
             table.appendChild(cell);
         }
+    };
+
+    const diff = (current, prev) => {
+        const diffAmount = current - prev;
+        return `<span style="color: ${diffAmount >= 0 ? "green" : "red"}">${
+            diffAmount >= 0 ? "+" : ""
+        }${diffAmount.toFixed(2)}</span>`;
     };
 
     formatMoney = (value) => {
