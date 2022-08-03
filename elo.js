@@ -45,7 +45,7 @@ var parseGames;
         playersInGame.forEach((name) => {
             if (players[name]) return;
             players[name] = {
-                name: name.substring(0, 1).toUpperCase() + name.substring(1),
+                name: capitalize(name),
                 profit: 0,
                 score: START_SCORE,
                 games: 0,
@@ -122,4 +122,12 @@ var parseGames;
         }
         return players;
     };
+
+    const capitalize = (string) =>
+        string
+            .split(" ")
+            .map(
+                (word) => word.substring(0, 1).toUpperCase() + word.substring(1)
+            )
+            .join(" ");
 })();
