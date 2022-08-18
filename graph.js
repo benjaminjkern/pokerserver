@@ -89,6 +89,10 @@ window.addEventListener("load", () => {
     document.getElementById("opengraph").onclick = () => {
         makeGraph();
     };
+    document.getElementById("graphcontainer").onclick = function (e) {
+        if (e.target !== this) return;
+        setGraphOpen(false);
+    };
     document.getElementById("closegraph").onclick = () => {
         setGraphOpen(false);
     };

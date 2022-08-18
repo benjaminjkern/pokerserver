@@ -1,5 +1,5 @@
 window.addEventListener("load", () => {
-    document.getElementById("closelogin").onclick = () => {
+    const closeLogin = () => {
         document.getElementById("login").style.display = "none";
         [...document.getElementsByClassName("signuponly")].forEach(
             (element) => (element.style.display = "none")
@@ -10,6 +10,12 @@ window.addEventListener("load", () => {
         document.getElementById("loginError").innerText = "";
         document.getElementById("loginError").style.display = "none";
     };
+
+    document.getElementById("login").onclick = function (e) {
+        if (e.target !== this) return;
+        closeLogin();
+    };
+    document.getElementById("closelogin").onclick = closeLogin;
 
     document.getElementById("openlogin").onclick = () => {
         document.getElementById("login").style.display = "flex";
