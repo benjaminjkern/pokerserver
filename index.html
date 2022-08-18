@@ -1,32 +1,51 @@
 <html>
 
-<head>
+  <head>
     <title>Silly Geese Poker</title>
     <script src="index.js"></script>
     <script src="elo.js"></script>
     <script src="table.js"></script>
     <script src="info.js"></script>
     <script src="graph.js"></script>
-    <link rel="stylesheet" href="index.css" />
-    <meta property="og:image" content="https://benjaminjkern.github.io/sillygeesepoker/goose.png" />
-</head>
+    <script src="login.js"></script>
+    <link rel="stylesheet" href="index.css"/>
+    <meta property="og:image" content="https://benjaminjkern.github.io/sillygeesepoker/goose.png"/>
+  </head>
 
-<body>
+  <body>
     <h1>Silly Geese Poker Current Standings</h1>
     <div id="year-selector">
-        <div id="show-all">Show all</div>
-        <div id="opengraph">Chart ></div>
+      <div id="show-all">Show all</div>
+      <div id="opengraph">Chart ></div>
     </div>
-    <div id="table">
+    <div id="logininfo">You are not currently signed in.
+      <button id="openlogin">Log In</button>
+      or
+      <button id="opensignup">Sign Up</button>
     </div>
+    <div id="table"></div>
     <div id="info"></div>
     <div class="spacer"></div>
-    <img src="goose.png" class="img1" />
-    <img src="goose.png" class="img2" />
+    <img src="goose.png" class="img1"/>
+    <img src="goose.png" class="img2"/>
     <div id="graphcontainer">
-        <span id="closegraph">X</span>
-        <canvas id="graph"></canvas>
+      <span class="close" id="closegraph">X</span>
+      <canvas id="graph"></canvas>
     </div>
-</body>
+
+    <div id="login">
+      <div class="loginbox">
+        <span class="close" id="closelogin">X</span>
+        <h2 id="logintitle">Log in to Silly Geese Poker</h2>
+        <input class="signuponly" placeholder="Name" id="username"/>
+        <input placeholder="Email" id="email"/>
+        <input placeholder="Password" type="password" id="password"/>
+        <input class="signuponly" placeholder="Confirm Password" type="password" id="confirmpassword"/>
+        <label class="signuponly"><input type="checkbox"/>I would like to receive email updates about Silly Geese Poker</label>
+        <span id="loginError"></span>
+        <button id="loginBtn">Log In</button>
+      </div>
+    </div>
+  </body>
 
 </html>
