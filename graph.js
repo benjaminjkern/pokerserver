@@ -57,7 +57,10 @@ window.addEventListener("load", () => {
         const boxHeight = 20;
         const boxMargin = 10;
         let p = 0;
-        for (const player in allPlayers) {
+        const sortedPlayers = Object.keys(allPlayers).sort(
+            (a, b) => allPlayers[b].score - allPlayers[a].score
+        );
+        for (const player of sortedPlayers) {
             ctx.fillStyle = colors[player];
             ctx.fillRect(
                 graph.width - 40 + boxMargin - dx,
