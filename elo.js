@@ -83,7 +83,7 @@ var parseGames;
                 players[name].games,
                 players[name].wins,
                 players[name].draws,
-                players[name].losses,
+                players[name].lastPlaces,
             ];
         });
 
