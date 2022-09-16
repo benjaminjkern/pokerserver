@@ -176,7 +176,7 @@ var parseGames;
             });
         }
 
-        playersInGame.forEach((name) => {
+        Object.keys(playerDeltaTracker).forEach((name) => {
             players[name].score +=
                 playerDeltaTracker[name].delta /
                 playerDeltaTracker[name].individualMatches;
