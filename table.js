@@ -43,6 +43,7 @@ window.addEventListener("load", () => {
                 wins: "Wins",
                 draws: "Draws",
                 losses: "Losses",
+                lastPlaces: "#Last",
                 bestHand: "",
                 secondBestHand: "",
                 thirdBestHand: "",
@@ -55,8 +56,9 @@ window.addEventListener("load", () => {
     };
 
     const unpackPlayer = (player) => {
-        const { name, score, profit, games, wins, draws, losses } = player;
-        return [name, score, profit, games, wins, draws, losses];
+        const { name, score, profit, games, wins, draws, losses, lastPlaces } =
+            player;
+        return [name, score, profit, games, wins, draws, losses, lastPlaces];
     };
 
     const renderRow = (table, player, topRow) => {
@@ -96,7 +98,7 @@ window.addEventListener("load", () => {
             if (i === sortingBy) cell.classList.add("selected");
             if (i % 2 === 0) cell.classList.add("odd");
             if (i === 0) cell.classList.add("first-child");
-            if (i === 6) cell.classList.add("last-child");
+            if (i === 7) cell.classList.add("last-child");
             table.appendChild(cell);
         }
     };

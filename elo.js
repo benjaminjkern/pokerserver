@@ -67,6 +67,7 @@ var parseGames;
                 wins: 0,
                 draws: 0,
                 losses: 0,
+                lastPlaces: 0,
                 bestHand: "",
                 secondBestHand: "",
                 thirdBestHand: "",
@@ -97,6 +98,12 @@ var parseGames;
             player.losses++;
             player.profit -= buyin * playerBuyins[name];
         }
+
+        const lastPlaces = orderOut[0].split("/").map((name) => players[name]);
+
+        lastPlaces.forEach((lastPlace) => {
+            lastPlace.lastPlaces += 1 / lastPlaces.length;
+        });
 
         const winners = orderOut[orderOut.length - 1]
             .split("/")
