@@ -19,6 +19,7 @@ var parseGames;
         // wins/losses
         for (const [w, winner] of winners.entries()) {
             for (const [l, loser] of losers.entries()) {
+                if (winner.name === loser.name) continue;
                 const expected = 1 - P(loser, winner);
                 const delta = ALPHA * weight * expected;
                 losersDelta[l] -= delta;
@@ -31,6 +32,7 @@ var parseGames;
         // ties
         for (const [l, loser] of losers.entries()) {
             for (const [o, otherLoser] of losers.slice(l + 1).entries()) {
+                if (otherLoser.name === loser.name) continue;
                 const expected = 0.5 - P(loser, otherLoser);
                 const delta = ALPHA * weight * expected;
                 losersDelta[l] -= delta;
@@ -146,10 +148,7 @@ var parseGames;
 
             const losers = names.map((name) => players[name]);
             const winners = Object.keys(playerBuyins)
-                .filter(
-                    (player) =>
-                        playerBuyins[player] > 0 && !names.includes(player)
-                )
+                .filter((player) => playerBuyins[player] > 0)
                 .map((playerName) => players[playerName]);
 
             const {
