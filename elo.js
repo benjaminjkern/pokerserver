@@ -6,38 +6,46 @@ var parseGames;
     const BASE = 10;
     const FACTOR = 400;
 
+    // probability that player 2 is going to beat player 1
     const P = (player1, player2) =>
         1 / (1 + BASE ** ((player1.score - player2.score) / FACTOR));
 
     const makeAdjustments = (losers, winners, weight) => {
         const losersDelta = losers.map(() => 0);
+        const losersIndividual = losers.map(() => 0);
         const winnersDelta = winners.map(() => 0);
+        const winnersIndividual = winners.map(() => 0);
+
         // wins/losses
         for (const [w, winner] of winners.entries()) {
             for (const [l, loser] of losers.entries()) {
-                const expected = P(loser, winner);
-                const delta = (ALPHA * weight * expected) / winners.length;
+                const expected = 1 - P(loser, winner);
+                const delta = ALPHA * weight * expected;
                 losersDelta[l] -= delta;
                 winnersDelta[w] += delta;
-            }
-        }
-        // ties
-        for (const [l, loser] of losers.entries()) {
-            for (const [o, otherLoser] of losers.slice(1).entries()) {
-                const expected = P(loser, otherLoser);
-                const delta =
-                    (ALPHA * weight * (expected - 0.5)) / losers.length;
-                losersDelta[l] -= delta;
-                losersDelta[o] += delta;
+                losersIndividual[l] += 1;
+                winnersIndividual[w] += 1;
             }
         }
 
-        for (const [w, winner] of winners.entries()) {
-            winner.score += winnersDelta[w];
-        }
+        // ties
         for (const [l, loser] of losers.entries()) {
-            loser.score += losersDelta[l];
+            for (const [o, otherLoser] of losers.slice(l + 1).entries()) {
+                const expected = 0.5 - P(loser, otherLoser);
+                const delta = ALPHA * weight * expected;
+                losersDelta[l] -= delta;
+                losersDelta[o] += delta;
+                losersIndividual[l] += 1;
+                losersIndividual[l + 1 + o] += 1;
+            }
         }
+
+        return {
+            losersDelta,
+            winnersDelta,
+            losersIndividual,
+            winnersIndividual,
+        };
     };
 
     const playGame = (orderOut, buyin, players) => {
@@ -119,20 +127,53 @@ var parseGames;
             });
         }
 
+        const playerDeltaTracker = {};
+
+        playersInGame.forEach((name) => {
+            playerDeltaTracker[name] = { individualMatches: 0, delta: 0 };
+        });
+
         for (const name of orderOut) {
             const names = name.split("/");
             names.forEach((name) => playerBuyins[name]--);
-            makeAdjustments(
-                names.map((name) => players[name]),
-                Object.keys(playerBuyins)
-                    .filter(
-                        (player) =>
-                            playerBuyins[player] > 0 && !names.includes(player)
-                    )
-                    .map((playerName) => players[playerName]),
-                buyin
-            );
+
+            const losers = names.map((name) => players[name]);
+            const winners = Object.keys(playerBuyins)
+                .filter(
+                    (player) =>
+                        playerBuyins[player] > 0 && !names.includes(player)
+                )
+                .map((playerName) => players[playerName]);
+
+            const {
+                losersDelta,
+                winnersDelta,
+                losersIndividual,
+                winnersIndividual,
+            } = makeAdjustments(losers, winners, buyin);
+
+            losers.forEach((loser, i) => {
+                playerDeltaTracker[loser.name.toLowerCase()].delta +=
+                    losersDelta[i];
+                playerDeltaTracker[
+                    loser.name.toLowerCase()
+                ].individualMatches += losersIndividual[i];
+            });
+
+            winners.forEach((winner, i) => {
+                playerDeltaTracker[winner.name.toLowerCase()].delta +=
+                    winnersDelta[i];
+                playerDeltaTracker[
+                    winner.name.toLowerCase()
+                ].individualMatches += winnersIndividual[i];
+            });
         }
+
+        playersInGame.forEach((name) => {
+            players[name].score +=
+                playerDeltaTracker[name].delta /
+                playerDeltaTracker[name].individualMatches;
+        });
     };
 
     parseGames = (games) => {
