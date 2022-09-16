@@ -39,9 +39,9 @@ window.addEventListener("load", () => {
                 name: "Name",
                 profit: "Profit",
                 score: "Score",
-                games: "Games",
-                wins: "Wins",
-                draws: "Draws",
+                games: "#Games",
+                wins: "#Wins",
+                draws: "#Draws",
                 losses: "Losses",
                 lastPlaces: "#Last",
                 bestHand: "",
@@ -56,9 +56,8 @@ window.addEventListener("load", () => {
     };
 
     const unpackPlayer = (player) => {
-        const { name, score, profit, games, wins, draws, losses, lastPlaces } =
-            player;
-        return [name, score, profit, games, wins, draws, losses, lastPlaces];
+        const { name, score, profit, games, wins, draws, lastPlaces } = player;
+        return [name, score, profit, games, wins, draws, lastPlaces];
     };
 
     const renderRow = (table, player, topRow) => {
@@ -98,7 +97,7 @@ window.addEventListener("load", () => {
             if (i === sortingBy) cell.classList.add("selected");
             if (i % 2 === 0) cell.classList.add("odd");
             if (i === 0) cell.classList.add("first-child");
-            if (i === 7) cell.classList.add("last-child");
+            if (i === 6) cell.classList.add("last-child");
             table.appendChild(cell);
         }
     };
