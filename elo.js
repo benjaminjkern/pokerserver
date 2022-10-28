@@ -118,7 +118,8 @@ var parseGames;
             winner.wins += 1 / winners.length;
             if (winners.length >= 2) winner.draws += 1 / winners.length;
 
-            winner.profit += (buyin * (orderOut.length - 1)) / winners.length;
+            winner.profit +=
+                (buyin * (playersInGame.length - 1)) / winners.length;
         });
 
         if (winners.length === 1) {
