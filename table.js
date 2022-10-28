@@ -8,7 +8,11 @@ window.addEventListener("load", () => {
     let PLAYERS;
 
     renderTable = (players, sortedBy = sortingBy || 1, flipTable = true) => {
-        PLAYERS = [...Object.keys(players).map((name) => players[name])];
+        PLAYERS = [
+            ...Object.keys(players)
+                .map((name) => players[name])
+                .filter((player) => player.games >= minGames),
+        ];
 
         for (const player of PLAYERS) {
             const lowercasename = player.name.toLowerCase();

@@ -1,5 +1,7 @@
 let games;
 
+let minGames = 2;
+
 window.onload = () => {
     const availableYears = ["2021", "2022"];
     const reloadTable = async (year) => {
@@ -21,11 +23,19 @@ window.onload = () => {
         games = await Promise.all(fetchYears.map(fetchYear)).then((yearGames) =>
             yearGames.flat()
         );
+        parseAndRender();
+    };
+
+    const parseAndRender = () => {
+        minGames = Math.max(1, Math.min(minGames, games.length));
+        document.getElementById("mingames").innerText = minGames;
+
         const players = parseGames(games);
 
         renderInfo(games, players);
         renderTable(players, undefined, false);
     };
+
     const fetchYear = async (year) => {
         const gamesString = await fetch(`games/${year}.csv`).then((response) =>
             response.text()
@@ -57,4 +67,14 @@ window.onload = () => {
     document.getElementById("show-all").onclick = () => reloadTable();
 
     reloadTable(availableYears[availableYears.length - 1]);
+
+    /** Min games */
+    document.getElementById("minus").onclick = () => {
+        minGames--;
+        parseAndRender();
+    };
+    document.getElementById("plus").onclick = () => {
+        minGames++;
+        parseAndRender();
+    };
 };

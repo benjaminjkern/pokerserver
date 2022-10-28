@@ -131,6 +131,24 @@ h1 {
     text-align: center;
 }
 
+.quantbutton {
+    background-color: rgb(114, 114, 114);
+    cursor: pointer;
+    margin: 0 10px;
+    padding: 5px 15px;
+    border-radius: 10px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.quantbutton:hover {
+    background-color: rgb(94, 94, 94);
+}
+
 #year-selector div.selected {
     color: rgb(185, 9, 9);
 }
@@ -143,12 +161,28 @@ h1 {
     margin: 20px;
 }
 
-#logininfo {
+#topbar {
     display: flex;
-    justify-content: flex-end;
     margin-bottom: 20px;
     align-items: center;
     text-align: center;
+}
+
+#logininfo {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+}
+
+@media only screen and (max-width: 874px) {
+    #topbar {
+        flex-direction: column;
+    }
+    #topbar div:first-child {
+        margin-bottom: 20px;
+    }
 }
 
 #logininfo button {
