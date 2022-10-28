@@ -149,6 +149,10 @@ h1 {
     background-color: rgb(94, 94, 94);
 }
 
+#mingamesinfo {
+    margin-top: 20px;
+}
+
 #year-selector div.selected {
     color: rgb(185, 9, 9);
 }
@@ -161,28 +165,12 @@ h1 {
     margin: 20px;
 }
 
-#topbar {
-    display: flex;
-    margin-bottom: 20px;
-    align-items: center;
-    text-align: center;
-}
-
 #logininfo {
     display: flex;
-    flex: 1;
+    margin-bottom: 20px;
     justify-content: flex-end;
     align-items: center;
     text-align: center;
-}
-
-@media only screen and (max-width: 874px) {
-    #topbar {
-        flex-direction: column;
-    }
-    #topbar div:first-child {
-        margin-bottom: 20px;
-    }
 }
 
 #logininfo button {
