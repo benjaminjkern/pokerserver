@@ -7,7 +7,7 @@ window.addEventListener("load", () => {
         document.getElementById("info").innerHTML = `Total games: ${
             games.length
         }<br>Total players: ${Object.keys(players).length}${
-            hiddenPlayers ? `(${hiddenPlayers} hidden)` : ""
+            hiddenPlayers ? ` (${hiddenPlayers} hidden)` : ""
         }<br>Total money laundered: ${formatMoney(
             games.reduce(
                 (p, game) =>
