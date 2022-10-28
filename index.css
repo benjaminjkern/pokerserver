@@ -150,7 +150,13 @@ h1 {
 }
 
 #mingamesinfo {
-    margin-top: 20px;
+    margin: 20px 0;
+}
+hr {
+    height: 3px;
+    border-radius: 3px;
+    background-color: rgb(94, 94, 94);
+    border: none;
 }
 
 #year-selector div.selected {
