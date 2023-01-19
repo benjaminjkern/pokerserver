@@ -3,7 +3,7 @@ let games;
 let minGames = 2;
 
 window.onload = () => {
-    const availableYears = ["2021", "2022"];
+    const availableYears = ["2021", "2022", "2023"];
     const reloadTable = async (year) => {
         document
             .getElementById("year-selector")
