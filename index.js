@@ -27,7 +27,10 @@ window.onload = () => {
     };
 
     const parseAndRender = () => {
-        minGames = Math.max(1, Math.min(minGames, games.length));
+        minGames = Math.max(
+            1,
+            Math.min(minGames, Math.floor(games.length / 2))
+        );
         document.getElementById("mingames").innerText = minGames;
 
         const players = parseGames(games);
@@ -42,7 +45,7 @@ window.onload = () => {
         );
         return gamesString
             .split(/\r?\n/g)
-            .filter((line) => line[0] !== "#")
+            .filter((line) => line && line[0] !== "#")
             .map((game, gameNum) => {
                 const [players, buyin, quote] = game.split(/\s*;\s*/g);
                 if (players.length === 0) return;
