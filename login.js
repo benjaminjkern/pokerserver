@@ -20,13 +20,13 @@ window.addEventListener("load", () => {
     document.getElementById("openlogin").onclick = () => {
         document.getElementById("login").style.display = "flex";
         document.getElementById("logintitle").innerText =
-            "Log in to Silly Geese Poker";
+            "Log in to Silly Goose Poker";
     };
 
     document.getElementById("opensignup").onclick = () => {
         document.getElementById("login").style.display = "flex";
         document.getElementById("logintitle").innerText =
-            "Sign Up for Silly Geese Poker";
+            "Sign Up for Silly Goose Poker";
         [...document.getElementsByClassName("signuponly")].forEach(
             (element) => (element.style.display = "inline")
         );
@@ -39,7 +39,7 @@ window.addEventListener("load", () => {
 
         if (
             document.getElementById("logintitle").innerText ===
-                "Sign Up for Silly Geese Poker" &&
+                "Sign Up for Silly Goose Poker" &&
             document.getElementById("username").value.length === 0
         ) {
             document.getElementById("username").classList.add("invalid");
@@ -73,7 +73,7 @@ window.addEventListener("load", () => {
 
         if (
             document.getElementById("logintitle").innerText ===
-            "Sign Up for Silly Geese Poker"
+            "Sign Up for Silly Goose Poker"
         ) {
             if (document.getElementById("username").value.length === 0) {
                 document.getElementById("username").classList.add("invalid");
