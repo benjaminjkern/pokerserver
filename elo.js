@@ -2,15 +2,16 @@ var parseGames;
 
 (() => {
     const START_SCORE = 1000;
-    const ALPHA = 1;
     const BASE = 10;
     const FACTOR = 400;
+
+    const WEIGHT = 40;
 
     // probability that player 2 is going to beat player 1
     const P = (player1, player2) =>
         1 / (1 + BASE ** ((player1.score - player2.score) / FACTOR));
 
-    const makeAdjustments = (losers, winners, weight) => {
+    const makeAdjustments = (losers, winners) => {
         const losersDelta = losers.map(() => 0);
         const losersIndividual = losers.map(() => 0);
         const winnersDelta = winners.map(() => 0);
@@ -21,7 +22,7 @@ var parseGames;
             for (const [l, loser] of losers.entries()) {
                 if (winner.name === loser.name) continue;
                 const expected = 1 - P(loser, winner);
-                const delta = ALPHA * weight * expected;
+                const delta = WEIGHT * expected;
                 losersDelta[l] -= delta;
                 winnersDelta[w] += delta;
                 losersIndividual[l] += 1;
@@ -34,7 +35,7 @@ var parseGames;
             for (const [o, otherLoser] of losers.slice(l + 1).entries()) {
                 if (otherLoser.name === loser.name) continue;
                 const expected = 0.5 - P(loser, otherLoser);
-                const delta = ALPHA * weight * expected;
+                const delta = WEIGHT * expected;
                 losersDelta[l] -= delta;
                 losersDelta[o] += delta;
                 losersIndividual[l] += 1;
@@ -157,7 +158,7 @@ var parseGames;
                 winnersDelta,
                 losersIndividual,
                 winnersIndividual,
-            } = makeAdjustments(losers, winners, buyin);
+            } = makeAdjustments(losers, winners);
 
             losers.forEach((loser, i) => {
                 playerDeltaTracker[loser.name.toLowerCase()].delta +=
