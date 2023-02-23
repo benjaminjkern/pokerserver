@@ -5,7 +5,7 @@ var parseGames;
     const BASE = 10;
     const FACTOR = 400;
 
-    const WEIGHT = 40;
+    const WEIGHT = 30;
 
     // probability that player 2 is going to beat player 1
     const P = (player1, player2) =>
