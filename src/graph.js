@@ -175,7 +175,7 @@ export const makeGraph = () => {
         ctx.beginPath();
 
         ctx.strokeStyle = colors[player.name.toLowerCase()];
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 8;
         let inGames = false;
         for (const [g, game] of playersPerGame.entries()) {
             let ranking = game.findIndex(

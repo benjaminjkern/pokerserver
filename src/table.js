@@ -12,18 +12,12 @@ export const renderTable = (
     sortedBy = sortingBy || 1,
     flipTable = true
 ) => {
-    for (const playerName in players) {
-        const lowercasename = playerName.toLowerCase();
-        if (colors[lowercasename]) continue;
-        colors[lowercasename] = `#${Math.random()
-            .toString(16)
-            .substring(2, 8)}`;
-    }
     PLAYERS = [
         ...Object.keys(players)
             .map((name) => players[name])
             .filter((player) => player.games >= minGames),
     ];
+
     if (sortedBy === sortingBy && flipTable) {
         reversingSort = !reversingSort;
     } else {
@@ -38,6 +32,17 @@ export const renderTable = (
             ? 1
             : -1
     );
+
+    for (const [p, player] of PLAYERS.entries()) {
+        const lowercasename = player.name.toLowerCase();
+        // if (colors[lowercasename]) continue;
+        // colors[lowercasename] = `#${Math.random()
+        //     .toString(16)
+        //     .substring(2, 8)}`;
+        colors[lowercasename] = `hsl(${Math.round(
+            (p / PLAYERS.length) * 360
+        )}, 100%, 50%)`;
+    }
     const table = document.getElementById("table");
     table.innerHTML = "";
     renderRow(
