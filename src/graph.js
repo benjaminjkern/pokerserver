@@ -1,6 +1,7 @@
 import { parseGames } from "./elo.js";
-import { games } from "./games.js";
+import { games, minGames } from "./games.js";
 import { colors } from "./table.js";
+import { capitalize, rankString } from "./utils.js";
 
 const graphcontainer = document.getElementById("graphcontainer");
 const graph = document.getElementById("graph");
@@ -12,7 +13,7 @@ window.addEventListener("resize", () => {
     if (graphOpen) makeGraph();
 });
 
-export const makeGraph = () => {
+export const makeScoreGraph = () => {
     setGraphOpen(true);
     let min = 1000,
         max = 1000;
@@ -83,6 +84,111 @@ export const makeGraph = () => {
             const players = playersPerGame[i];
             const score = players[player]?.score || 1000;
             ctx.lineTo(40 + (i + 1) * dx, 40 + (maxint - score / 100) * dy);
+        }
+        ctx.stroke();
+    }
+};
+
+export const makeGraph = () => {
+    setGraphOpen(true);
+    const playersPerGame = games.map((_, g) => {
+        const subgames = games.slice(0, g + 1);
+        const players = parseGames(subgames);
+
+        const sortedPlayers = Object.keys(players).map((name) => players[name]);
+        sortedPlayers.sort((a, b) => b.score - a.score);
+
+        return sortedPlayers;
+    });
+    const totalGames = playersPerGame[playersPerGame.length - 1].reduce(
+        (p, { name, games }) => ({ ...p, [name]: games }),
+        {}
+    );
+    playersPerGame.forEach((game, g) => {
+        playersPerGame[g] = game.filter(
+            (player) => totalGames[player.name] >= minGames
+        );
+    });
+
+    graph.width = window.innerWidth - 80;
+    graph.height = window.innerHeight - 80;
+
+    ctx.fillStyle = "#333";
+    ctx.fillRect(0, 0, graph.width, graph.height);
+
+    ctx.font = "900 20px Arial";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "right";
+    // draw grid
+
+    const allPlayers = playersPerGame[playersPerGame.length - 1];
+
+    ctx.lineCap = "round";
+    const boxHeight = 20;
+    const boxMargin = 10;
+    const nameMargin = 100;
+    const rankMargin = 50;
+
+    const dx =
+        (graph.width - 80 - nameMargin - rankMargin) /
+        (playersPerGame.length - 1);
+    const dy =
+        boxHeight +
+        (1 / (allPlayers.length - 1)) *
+            (graph.height - 80 - allPlayers.length * boxHeight);
+
+    // Draw lines
+    for (const p in allPlayers) {
+        ctx.beginPath();
+        ctx.strokeStyle = "#999";
+        ctx.lineWidth = 2;
+        ctx.moveTo(40 + rankMargin, 50 + p * dy);
+        ctx.lineTo(
+            40 + rankMargin + dx * (playersPerGame.length - 1),
+            50 + p * dy
+        );
+        ctx.stroke();
+    }
+
+    for (const [p, player] of allPlayers.entries()) {
+        // Draw player box
+        ctx.beginPath();
+        ctx.fillStyle = colors[player.name.toLowerCase()];
+        ctx.arc(
+            graph.width - 40 - nameMargin,
+            50 + p * dy,
+            boxHeight / 2,
+            0,
+            2 * Math.PI
+        );
+        ctx.fill();
+        ctx.fillStyle = "white";
+        ctx.textAlign = "left";
+        ctx.fillText(
+            capitalize(player.name),
+            graph.width - 40 + 2 * boxMargin - nameMargin,
+            51 + p * dy
+        );
+        ctx.textAlign = "right";
+        ctx.fillText(rankString(p + 1), 30 + rankMargin, 51 + p * dy);
+
+        ctx.beginPath();
+
+        ctx.strokeStyle = colors[player.name.toLowerCase()];
+        ctx.lineWidth = 5;
+        let inGames = false;
+        for (const [g, game] of playersPerGame.entries()) {
+            let ranking = game.findIndex(
+                (gPlayer) => gPlayer.name === player.name
+            );
+            if (ranking === -1) continue;
+            const newPos = [40 + g * dx + rankMargin, 50 + ranking * dy];
+            if (!inGames) {
+                inGames = true;
+                ctx.moveTo(...newPos);
+            } else {
+                ctx.lineTo(...newPos);
+            }
         }
         ctx.stroke();
     }

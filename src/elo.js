@@ -1,3 +1,5 @@
+import { capitalize } from "./utils.js";
+
 const START_SCORE = 1000;
 const BASE = 10;
 const FACTOR = 400;
@@ -178,12 +180,6 @@ const playGame = (orderOut, buyin, players) => {
             playerDeltaTracker[name].individualMatches;
     });
 };
-
-const capitalize = (string) =>
-    string
-        .split(" ")
-        .map((word) => word.substring(0, 1).toUpperCase() + word.substring(1))
-        .join(" ");
 
 export const parseGames = (games) => {
     const players = {};
