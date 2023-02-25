@@ -1,6 +1,8 @@
-let games;
-
-let minGames = 2;
+import { parseGames } from "./src/elo.js";
+import { renderInfo } from "./src/info.js";
+import { games, minGames, setGames, setMinGames } from "./src/games.js";
+import { renderTable } from "./src/table.js";
+import "./src/graph.js";
 
 window.onload = () => {
     const availableYears = ["2021", "2022", "2023"];
@@ -20,16 +22,17 @@ window.onload = () => {
             document.getElementById("show-all").classList.add("selected");
         }
 
-        games = await Promise.all(fetchYears.map(fetchYear)).then((yearGames) =>
-            yearGames.flat()
+        setGames(
+            await Promise.all(fetchYears.map(fetchYear)).then((yearGames) =>
+                yearGames.flat()
+            )
         );
         parseAndRender();
     };
 
     const parseAndRender = () => {
-        minGames = Math.max(
-            1,
-            Math.min(minGames, Math.floor(games.length / 2))
+        setMinGames(
+            Math.max(1, Math.min(minGames, Math.floor(games.length / 2)))
         );
         document.getElementById("mingames").innerText = minGames;
 
@@ -73,11 +76,11 @@ window.onload = () => {
 
     /** Min games */
     document.getElementById("minus").onclick = () => {
-        minGames--;
+        setMinGames(minGames - 1);
         parseAndRender();
     };
     document.getElementById("plus").onclick = () => {
-        minGames++;
+        setMinGames(minGames + 1);
         parseAndRender();
     };
 };
