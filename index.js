@@ -3,6 +3,7 @@ import { renderInfo } from "./src/info.js";
 import { games, minGames, setGames, setMinGames } from "./src/games.js";
 import { renderTable } from "./src/table.js";
 import "./src/graph.js";
+import "./src/login.js";
 
 window.onload = () => {
     const availableYears = ["2021", "2022", "2023"];
