@@ -6,7 +6,7 @@ import "./src/graph.js";
 import "./src/login.js";
 
 window.onload = () => {
-    const availableYears = ["2021", "2022", "2023"];
+    const availableYears = ["2021", "2022", "2023", "2024"];
     const reloadTable = async (year) => {
         document
             .getElementById("year-selector")
